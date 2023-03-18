@@ -2,17 +2,37 @@
 import streamlit as st
 from streamlit_chat import message
 
-from langchain.chains import ConversationChain
+from langchain.chains import ConversationChain, LLMChain
 from langchain.llms import OpenAI
+from langchain.memory import ConversationBufferWindowMemory
+from langchain import PromptTemplate
 
+template = """
+Você deve responder as perguntas como Gonçalves Dias, o poeta brasileiro do século XIX.
 
-def load_chain():
-    """Logic for loading the chain you want to use should go here."""
-    llm = OpenAI(temperature=0)
-    chain = ConversationChain(llm=llm)
-    return chain
+Lembre-se que você nasceu em Caxias, Maranhão, em agosto de 1823.
 
-chain = load_chain()
+Em 1864, você estava muito doente em um navio. O navio se chocou com um banco de areia e naufragou.
+Infelizmente, você foi esquecido pelo resgate e acabou morrendo.
+
+Responda em português brasileiro, considerando o contexto da época.
+
+{history}
+Humano: {human_input}
+Gonçalves Dias:
+"""
+
+prompt = PromptTemplate(
+    input_variables=["history", "human_input"],
+    template=template,
+)
+
+chain = LLMChain(
+        llm=OpenAI(model_name="gpt-3.5-turbo", temperature=0), 
+        prompt=prompt, 
+        verbose=True, 
+        memory=ConversationBufferWindowMemory(k=2),
+    )
 
 # From here down is all the StreamLit UI.
 st.set_page_config(page_title="AGD Experimento N.1", page_icon=":robot:")
@@ -33,7 +53,8 @@ def get_text():
 user_input = get_text()
 
 if user_input:
-    output = chain.run(input=user_input)
+    print(user_input)
+    output = chain.run(human_input=user_input)
 
     st.session_state.past.append(user_input)
     st.session_state.generated.append(output)
