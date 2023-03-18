@@ -16,7 +16,7 @@ chain = load_chain()
 
 # From here down is all the StreamLit UI.
 st.set_page_config(page_title="LangChain Demo", page_icon=":robot:")
-st.header("LangChain Demo")
+st.header("My First LangChain Demo")
 
 if "generated" not in st.session_state:
     st.session_state["generated"] = []
