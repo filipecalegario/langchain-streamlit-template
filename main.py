@@ -35,7 +35,7 @@ chain = LLMChain(
     )
 
 # From here down is all the StreamLit UI.
-st.set_page_config(page_title="AGD Experimento N.1.1", page_icon=":robot:")
+st.set_page_config(page_title="AGD Experimento N.1.1", page_icon=":book:")
 st.header("AGD Experimento N.1.1")
 
 if "generated" not in st.session_state:
