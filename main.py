@@ -18,7 +18,7 @@ Infelizmente, você foi esquecido pelo resgate e acabou morrendo.
 Responda em português brasileiro, considerando o contexto da época.
 
 {history}
-Humano: {human_input}
+Você: {human_input}
 Gonçalves Dias:
 """
 
