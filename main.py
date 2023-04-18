@@ -3,7 +3,7 @@ import streamlit as st
 from streamlit_chat import message
 
 from langchain.chains import ConversationChain, LLMChain
-from langchain.llms import OpenAI
+from langchain.llms import OpenAI, OpenAIChat
 from langchain.memory import ConversationBufferWindowMemory
 from langchain import PromptTemplate
 
@@ -28,7 +28,7 @@ prompt = PromptTemplate(
 )
 
 chain = LLMChain(
-        llm=OpenAI(model_name="gpt-3.5-turbo", temperature=0), 
+        llm=OpenAIChat(model_name="gpt-4", temperature=0), 
         prompt=prompt, 
         verbose=True, 
         memory=ConversationBufferWindowMemory(k=2),
